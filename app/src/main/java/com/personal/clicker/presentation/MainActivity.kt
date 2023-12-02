@@ -33,12 +33,14 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.personal.clicker.ClickerApplication
 import com.personal.clicker.R
 import com.personal.clicker.domain.History
 import com.personal.clicker.domain.TabItem
+import com.personal.clicker.domain.util.C
 import com.personal.clicker.presentation.ui.screens.ClickerScreen
 import com.personal.clicker.presentation.ui.screens.HistoryScreen
 import com.personal.clicker.presentation.ui.theme.ClickerTheme
@@ -57,6 +59,7 @@ class MainActivity : ComponentActivity() {
                     }
                 )
                 val historyState by viewModel.historyState.collectAsState()
+                viewModel.uiEvent(UIEvent.SortHistory(C.getSortType(LocalContext.current)))
                 val tabItems = listOf(
                     TabItem(title = "Clicker", unselectedIcon = R.drawable.icon_mouse_fill0, selectedIcon = R.drawable.icon_mouse_fill1),
                     TabItem(title = "History", unselectedIcon = R.drawable.icon_history_edu_fill0, selectedIcon = R.drawable.icon_history_edu_fill1)

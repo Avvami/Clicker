@@ -1,6 +1,5 @@
 package com.personal.clicker.presentation.ui.screens
 
-import android.util.Log
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -68,7 +67,6 @@ fun HistoryScreen(
     val currentSortType by sortType.collectAsState()
     LaunchedEffect(currentSortType) {
         storedSortType = C.getSortType(context)
-        Log.i("SortType", storedSortType.name)
     }
     Box(modifier = Modifier.fillMaxSize()) {
         Column(modifier = Modifier.fillMaxWidth()) {
@@ -205,10 +203,8 @@ fun BottomSheet(
 ) {
     val context = LocalContext.current
     val sheetState = rememberModalBottomSheetState()
-    val sortByDate = remember { mutableStateOf(if (sortType == SortType.DATE_DESC || sortType == SortType.DATE_ASC) true else null) }
-//    val sortByDateDesc = remember { mutableStateOf(sortType == SortType.DATE_DESC) }
-    val sortByValue = remember { mutableStateOf(if (sortType == SortType.VALUE_DESC || sortType == SortType.VALUE_ASC) true else null) }
-//    val sortByValueDesc = remember { mutableStateOf(sortType == SortType.VALUE_DESC) }
+    val sortByDate = remember { mutableStateOf(if (sortType == SortType.DATE_DESC) true else if (sortType == SortType.DATE_ASC) false else null) }
+    val sortByValue = remember { mutableStateOf(if (sortType == SortType.VALUE_DESC) true else if (sortType == SortType.VALUE_ASC) false else null) }
     ModalBottomSheet(onDismissRequest = { onDismiss() }, sheetState = sheetState) {
         Text(
             text = "Sort by",
