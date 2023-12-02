@@ -21,6 +21,15 @@ class ClickerViewModel(private val repository: ClickerRepository): ViewModel() {
     var selectedTabIndex by mutableStateOf(0)
         private set
 
+    var isDeleteDialogOpen by mutableStateOf(false)
+        private set
+
+    var isBottomSheetOpen by mutableStateOf(false)
+        private set
+
+    var selectedHistoryItem by mutableStateOf<History?>(null)
+        private set
+
     var historyState: StateFlow<HistoryState> =
         repository.getHistoryByValueDescStream().map { HistoryState(it) }
             .stateIn(
@@ -31,12 +40,26 @@ class ClickerViewModel(private val repository: ClickerRepository): ViewModel() {
 
     fun uiEvent(event: UIEvent) {
         when(event) {
-            UIEvent.ClearHistory -> TODO()
-            is UIEvent.DeleteHistoryItem -> TODO()
+            UIEvent.ClearHistory -> {
+                viewModelScope.launch {
+                    repository.clearHistory()
+                }
+            }
+            is UIEvent.DeleteHistoryItem -> {
+                viewModelScope.launch {
+                    repository.deleteHistoryItem(selectedHistoryItem!!)
+                }
+            }
             is UIEvent.IncreaseClickValue -> {
                 clickerValue = event.value
             }
-            is UIEvent.OpenDialog -> TODO()
+            is UIEvent.OpenDeleteDialog -> {
+                isDeleteDialogOpen = event.isOpen
+                selectedHistoryItem = event.historyItem
+            }
+            is UIEvent.OpenBottomSheet -> {
+                isBottomSheetOpen = event.isOpen
+            }
             is UIEvent.SaveHistoryItem -> {
                 viewModelScope.launch {
                     repository.insertClickerHistoryItem(event.history)

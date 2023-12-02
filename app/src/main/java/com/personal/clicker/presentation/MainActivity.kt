@@ -154,7 +154,10 @@ class MainActivity : ComponentActivity() {
                                     1 -> {
                                         HistoryScreen(
                                             historyList = historyState.historyList,
-                                            uiEvent = viewModel::uiEvent
+                                            uiEvent = viewModel::uiEvent,
+                                            isBottomSheetOpen = viewModel.isBottomSheetOpen,
+                                            isDeleteDialogOpen = viewModel.isDeleteDialogOpen,
+                                            selectedHistoryItem = viewModel.selectedHistoryItem
                                         )
                                     }
                                 }
