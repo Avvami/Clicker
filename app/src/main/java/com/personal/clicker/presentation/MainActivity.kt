@@ -69,8 +69,8 @@ class MainActivity : ComponentActivity() {
                     Scaffold(
                         topBar = {
                             TopAppBar(
-                                title = { Text(text = "You can do better") },
-                                colors = TopAppBarDefaults.smallTopAppBarColors(
+                                title = { Text(text = "Click'r") },
+                                colors = TopAppBarDefaults.topAppBarColors(
                                     containerColor = MaterialTheme.colorScheme.secondaryContainer,
                                     titleContentColor = MaterialTheme.colorScheme.onSecondaryContainer
                                 ),
@@ -157,7 +157,8 @@ class MainActivity : ComponentActivity() {
                                             uiEvent = viewModel::uiEvent,
                                             isBottomSheetOpen = viewModel.isBottomSheetOpen,
                                             isDeleteDialogOpen = viewModel.isDeleteDialogOpen,
-                                            selectedHistoryItem = viewModel.selectedHistoryItem
+                                            selectedHistoryItem = viewModel.selectedHistoryItem,
+                                            sortType = viewModel.sortType
                                         )
                                     }
                                 }
